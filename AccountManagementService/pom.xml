@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.lenhatthanh</groupId>
-	<artifactId>AccountManagement</artifactId>
+	<artifactId>AccountManagementService</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>AccountManagement</name>
 	<description>AccountManagement</description>
