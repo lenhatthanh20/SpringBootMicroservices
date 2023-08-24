@@ -1,0 +1,13 @@
+services:
+  postgres-users:
+    image: postgres
+    environment:
+      POSTGRES_DB: users
+      POSTGRES_USER: lenhatthanh
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data-user:/var/lib/postgresql/data
+volumes:
+  postgres-data-user:
