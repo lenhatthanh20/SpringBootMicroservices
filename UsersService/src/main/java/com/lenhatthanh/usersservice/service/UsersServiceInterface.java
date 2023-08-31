@@ -1,7 +1,7 @@
 package com.lenhatthanh.usersservice.service;
 
-import com.lenhatthanh.usersservice.dto.UserDto;
+import com.lenhatthanh.usersservice.model.UserDto;
 
 public interface UsersServiceInterface {
-    UserDto create(UserDto user);
+    void create(UserDto user);
 }

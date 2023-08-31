@@ -1,33 +1,35 @@
 package com.lenhatthanh.usersservice.service;
 
-import com.lenhatthanh.usersservice.dto.UserDto;
+import com.lenhatthanh.usersservice.model.UserDto;
 import com.lenhatthanh.usersservice.entity.UserEntity;
-import com.lenhatthanh.usersservice.repository.UserRepository;
-import org.springframework.beans.BeanUtils;
+import com.lenhatthanh.usersservice.repository.UserRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
-public class UsersService implements UsersServiceInterface{
-    UserRepository userRepository;
+public class UsersService implements UsersServiceInterface {
+    UserRepositoryInterface userRepositoryInterface;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsersService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UsersService(UserRepositoryInterface userRepositoryInterface, PasswordEncoder passwordEncoder) {
+        this.userRepositoryInterface = userRepositoryInterface;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserDto create(UserDto userDto) {
-        userDto.setId(UUID.randomUUID().toString());
+    public void create(UserDto userDto) {
+        UserEntity userEntity = UserEntity.builder()
+                .userId(UUID.randomUUID().toString())
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .email(userDto.getEmail())
+                .password(passwordEncoder.encode(userDto.getPassword()))
+                .build();
 
-        UserEntity userEntity = new UserEntity();
-        BeanUtils.copyProperties(userEntity, userDto);
-
-        userEntity.setPassword("test");
-
-        userRepository.save(userEntity);
-        return null;
+        userRepositoryInterface.save(userEntity);
     }
 }

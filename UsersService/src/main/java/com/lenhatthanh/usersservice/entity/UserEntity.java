@@ -1,14 +1,15 @@
 package com.lenhatthanh.usersservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name="users")
 public class UserEntity implements Serializable {
@@ -16,8 +17,11 @@ public class UserEntity implements Serializable {
     private static final long serialVersionUID = 6009937215357249661L;
 
     @Id
-    @GeneratedValue
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false, length = 255, unique = true)
+    private String userId;
 
     @Column(nullable = false, length = 50)
     private String firstName;
@@ -28,6 +32,6 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 120, unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String password;
 }

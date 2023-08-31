@@ -3,12 +3,12 @@ package com.lenhatthanh.usersservice.model;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
-@Getter
-public class UserRequest {
+@Data
+public class UserDto {
+    private String userId;
+
     @NotNull(message="Fist name cannot be null")
     @Size(min=2, message="First name must not be less than two characters")
     private String firstName;
