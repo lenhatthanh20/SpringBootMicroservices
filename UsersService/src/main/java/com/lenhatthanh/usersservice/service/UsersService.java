@@ -24,19 +24,26 @@ public class UsersService implements UsersServiceInterface {
 
     @Override
     public void create(UserDto userDto) {
-        Optional<UserEntity> user = userRepositoryInterface.findByEmail(userDto.getEmail());
-        if(user.isPresent()) {
-            throw new UserAlreadyExistException(userDto.getEmail());
-        }
+        this.checkAndThrowIfUserExists(userDto.getEmail());
+        UserEntity userEntity = createEntityFromDto(userDto);
+        userRepositoryInterface.save(userEntity);
+    }
 
-        UserEntity userEntity = UserEntity.builder()
+    private void checkAndThrowIfUserExists(String email) {
+        Optional<UserEntity> user = userRepositoryInterface.findByEmail(email);
+        if (user.isPresent()) {
+            throw new UserAlreadyExistException(email);
+        }
+    }
+
+    private UserEntity createEntityFromDto(UserDto userDto) {
+        return UserEntity
+                .builder()
                 .userId(UUID.randomUUID().toString())
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .build();
-
-        userRepositoryInterface.save(userEntity);
     }
 }
