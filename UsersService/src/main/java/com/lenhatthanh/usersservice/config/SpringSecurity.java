@@ -25,11 +25,6 @@ public class SpringSecurity {
     private final UsersService usersService;
     private final PasswordEncoder passwordEncoder;
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
