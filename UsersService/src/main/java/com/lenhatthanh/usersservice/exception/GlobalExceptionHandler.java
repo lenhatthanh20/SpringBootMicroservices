@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({ UserAlreadyExistException.class })
+    @ExceptionHandler({ EmailAlreadyExistException.class })
     @ResponseStatus(HttpStatus.CONFLICT)
     public ExceptionResponse handleAlreadyExist(ApplicationException exception, final HttpServletRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();

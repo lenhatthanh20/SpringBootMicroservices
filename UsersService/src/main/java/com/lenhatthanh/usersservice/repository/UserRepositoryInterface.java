@@ -1,6 +1,6 @@
 package com.lenhatthanh.usersservice.repository;
 
-import com.lenhatthanh.usersservice.entity.UserEntity;
+import com.lenhatthanh.usersservice.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
