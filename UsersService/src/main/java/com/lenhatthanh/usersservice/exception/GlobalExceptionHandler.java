@@ -25,10 +25,7 @@ public class GlobalExceptionHandler {
         return createExceptionResponse(exception.getCode(), exception.getMessage(), request.getRequestURI());
     }
 
-    @ExceptionHandler({
-            InvalidEmailOrPasswordException.class,
-            UserNotFoundException.class,
-    })
+    @ExceptionHandler({UserNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionResponse handleNotFoundExceptions(ApplicationException exception, final HttpServletRequest request) {
         return createExceptionResponse(exception.getCode(), exception.getMessage(), request.getRequestURI());

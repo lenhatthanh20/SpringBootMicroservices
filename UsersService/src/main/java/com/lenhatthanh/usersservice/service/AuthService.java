@@ -1,6 +1,6 @@
 package com.lenhatthanh.usersservice.service;
 
-import com.lenhatthanh.usersservice.exception.InvalidEmailOrPasswordException;
+import com.lenhatthanh.usersservice.exception.UserNotFoundException;
 import com.lenhatthanh.usersservice.model.LoginDto;
 import com.lenhatthanh.usersservice.model.UserEntity;
 import com.lenhatthanh.usersservice.model.LoginResponseDto;
@@ -26,7 +26,7 @@ public class AuthService implements AuthServiceInterface {
     public LoginResponseDto login(LoginDto request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserEntity userEntity = usersRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new InvalidEmailOrPasswordException(messages.getMessage("error.application.invalidEmailOrPassword")));
+                .orElseThrow(() -> new UserNotFoundException(messages.getMessage("error.application.userNotFound")));
         String token = jwtService.generateToken(new User(userEntity.getEmail(), userEntity.getPassword(), true, true, true, true, new ArrayList<>()));
 
         return new LoginResponseDto(userEntity.getUserId(), token);
