@@ -1,8 +1,8 @@
 package com.lenhatthanh.usersservice.service;
 
-import com.lenhatthanh.usersservice.exception.UserAlreadyExistException;
+import com.lenhatthanh.usersservice.exception.EmailAlreadyExistException;
 import com.lenhatthanh.usersservice.model.UserDto;
-import com.lenhatthanh.usersservice.entity.UserEntity;
+import com.lenhatthanh.usersservice.model.UserEntity;
 import com.lenhatthanh.usersservice.repository.UserRepositoryInterface;
 import com.lenhatthanh.usersservice.shared.Messages;
 import lombok.AllArgsConstructor;
@@ -21,15 +21,15 @@ public class UsersService implements UsersServiceInterface {
 
     @Override
     public void create(UserDto userDto) {
-        this.checkAndThrowIfUserExists(userDto.getEmail());
+        this.checkAndThrowErrorIfUserExists(userDto.getEmail());
         UserEntity userEntity = createEntityFromDto(userDto);
         userRepositoryInterface.save(userEntity);
     }
 
-    private void checkAndThrowIfUserExists(String email) {
+    private void checkAndThrowErrorIfUserExists(String email) {
         Optional<UserEntity> user = userRepositoryInterface.findByEmail(email);
         if (user.isPresent()) {
-            throw new UserAlreadyExistException(messages.getMessage("error.application.emailAlreadyExist"));
+            throw new EmailAlreadyExistException(messages.getMessage("error.application.emailAlreadyExist"));
         }
     }
 

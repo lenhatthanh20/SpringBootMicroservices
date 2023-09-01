@@ -1,4 +1,4 @@
-package com.lenhatthanh.usersservice.entity;
+package com.lenhatthanh.usersservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
