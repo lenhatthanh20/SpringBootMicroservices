@@ -9,19 +9,19 @@ import lombok.Data;
 public class UserDto {
     private String userId;
 
-    @NotNull(message="Fist name cannot be null")
-    @Size(min=2, message="First name must not be less than two characters")
+    @NotNull(message="{error.validation.user.firstName.required}")
+    @Size(min=2, message="{error.validation.user.firstName.size}")
     private String firstName;
 
-    @NotNull(message="Last name cannot be null")
-    @Size(min=2, message="Last name must not be less than two characters")
+    @NotNull(message="{error.validation.user.lastName.required}")
+    @Size(min=2, message="{error.validation.user.lastName.size}")
     private String lastName;
 
-    @NotNull(message="Password cannot be null")
-    @Size(min=8, max=16, message="Password must be equal or greater than 8 characters and less than 16 characters")
+    @NotNull(message="{error.validation.user.password.required}")
+    @Size(min=8, max=16, message="{error.validation.user.password.size}")
     private String password;
 
-    @NotNull(message="Email cannot be null")
-    @Email
+    @NotNull(message="{error.validation.user.email.required}")
+    @Email(message="{error.validation.user.email.format}")
     private String email;
 }

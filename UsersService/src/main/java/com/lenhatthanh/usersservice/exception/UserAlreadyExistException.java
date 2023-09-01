@@ -1,7 +1,7 @@
 package com.lenhatthanh.usersservice.exception;
 
-public class UserAlreadyExistException extends RuntimeException {
-    public UserAlreadyExistException(String email) {
-        super("The email " + email + " already exist");
+public class UserAlreadyExistException extends ApplicationException {
+    public UserAlreadyExistException(String message) {
+        super(message);
     }
 }
