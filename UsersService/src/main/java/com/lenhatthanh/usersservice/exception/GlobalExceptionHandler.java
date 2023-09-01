@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AuthenticationException.class)
     public ExceptionResponse handleBadCredentialsExceptions(AuthenticationException exception, final HttpServletRequest request) {
-        String code = messages.getMessage("error.common.unauthorized");
+        String code = messages.getMessage("error.code.common.unauthorized");
 
         return createExceptionResponse(code, exception.getMessage(), request.getRequestURI());
     }
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RuntimeException.class)
     public ExceptionResponse handleRuntimeExceptions(RuntimeException exception, final HttpServletRequest request) {
-        String code = messages.getMessage("error.common.badRequest");
+        String code = messages.getMessage("error.code.common.badRequest");
 
         return createExceptionResponse(code, exception.getMessage(), request.getRequestURI());
     }
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ExceptionResponse handleUnwantedExceptions(Exception exception, final HttpServletRequest request) {
-        String code = messages.getMessage("error.common.unknown");
+        String code = messages.getMessage("error.code.common.unknown");
 
         return createExceptionResponse(code, exception.getMessage(), request.getRequestURI());
     }
