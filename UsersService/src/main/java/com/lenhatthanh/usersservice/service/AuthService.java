@@ -3,6 +3,7 @@ package com.lenhatthanh.usersservice.service;
 import com.lenhatthanh.usersservice.exception.InvalidEmailOrPasswordException;
 import com.lenhatthanh.usersservice.model.LoginDto;
 import com.lenhatthanh.usersservice.model.UserEntity;
+import com.lenhatthanh.usersservice.model.LoginResponseDto;
 import com.lenhatthanh.usersservice.repository.UserRepositoryInterface;
 import com.lenhatthanh.usersservice.shared.Messages;
 import lombok.AllArgsConstructor;
@@ -19,14 +20,15 @@ public class AuthService implements AuthServiceInterface {
     private final UserRepositoryInterface usersRepository;
     private final JwtServiceInterface jwtService;
     private final AuthenticationManager authenticationManager;
-    Messages messages;
+    private final Messages messages;
 
     @Override
-    public String login(LoginDto request) {
+    public LoginResponseDto login(LoginDto request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         UserEntity userEntity = usersRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new InvalidEmailOrPasswordException(messages.getMessage("error.application.invalidEmailOrPassword")));
+        String token = jwtService.generateToken(new User(userEntity.getEmail(), userEntity.getPassword(), true, true, true, true, new ArrayList<>()));
 
-        return jwtService.generateToken(new User(userEntity.getEmail(), userEntity.getPassword(), true, true, true, true, new ArrayList<>()));
+        return new LoginResponseDto(userEntity.getUserId(), token);
     }
 }
