@@ -1,5 +1,6 @@
 package com.lenhatthanh.usersservice.exception;
 
+import com.lenhatthanh.usersservice.shared.StringHelpers;
 import lombok.Getter;
 
 @Getter
@@ -17,8 +18,8 @@ public class ApplicationException extends RuntimeException {
      * We will split the error code and message separately
      */
     private void splitMessageAndCode(String message) {
-        String[] parts = message.split(":", 2);
-        this.message = parts[1].trim();
-        this.code = parts[0].trim();
+        String[] splitMessage = StringHelpers.splitStringWithColon(message);
+        this.code = splitMessage[0];
+        this.message = splitMessage[1];
     }
 }
