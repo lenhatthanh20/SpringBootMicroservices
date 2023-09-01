@@ -4,23 +4,20 @@ import com.lenhatthanh.usersservice.exception.UserAlreadyExistException;
 import com.lenhatthanh.usersservice.model.UserDto;
 import com.lenhatthanh.usersservice.entity.UserEntity;
 import com.lenhatthanh.usersservice.repository.UserRepositoryInterface;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lenhatthanh.usersservice.shared.Messages;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@AllArgsConstructor
 @Service
 public class UsersService implements UsersServiceInterface {
     UserRepositoryInterface userRepositoryInterface;
     PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UsersService(UserRepositoryInterface userRepositoryInterface, PasswordEncoder passwordEncoder) {
-        this.userRepositoryInterface = userRepositoryInterface;
-        this.passwordEncoder = passwordEncoder;
-    }
+    Messages messages;
 
     @Override
     public void create(UserDto userDto) {
@@ -32,7 +29,7 @@ public class UsersService implements UsersServiceInterface {
     private void checkAndThrowIfUserExists(String email) {
         Optional<UserEntity> user = userRepositoryInterface.findByEmail(email);
         if (user.isPresent()) {
-            throw new UserAlreadyExistException(email);
+            throw new UserAlreadyExistException(messages.getMessage("error.application.emailAlreadyExist"));
         }
     }
 

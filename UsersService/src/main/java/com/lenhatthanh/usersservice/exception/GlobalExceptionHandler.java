@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ExceptionHandler({ UserAlreadyExistException.class })
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ExceptionResponse handleAlreadyExist(Exception exception, final HttpServletRequest request) {
+    public ExceptionResponse handleAlreadyExist(ApplicationException exception, final HttpServletRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setErrorCode(exception.getCode());
         exceptionResponse.setErrorMessage(exception.getMessage());
         exceptionResponse.setRequestedURI(request.getRequestURI());
-        exceptionResponse.setErrorCode("ERROR-00001");
 
         return exceptionResponse;
     }
