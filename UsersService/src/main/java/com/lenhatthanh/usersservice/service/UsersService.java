@@ -2,12 +2,12 @@ package com.lenhatthanh.usersservice.service;
 
 import com.lenhatthanh.usersservice.exception.EmailAlreadyExistException;
 import com.lenhatthanh.usersservice.exception.UserNotFoundException;
-import com.lenhatthanh.usersservice.model.UserDetailsDto;
 import com.lenhatthanh.usersservice.model.UserDto;
 import com.lenhatthanh.usersservice.model.UserEntity;
 import com.lenhatthanh.usersservice.repository.UserRepositoryInterface;
 import com.lenhatthanh.usersservice.shared.Messages;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +21,7 @@ import java.util.UUID;
 @Service
 public class UsersService implements UsersServiceInterface {
     UserRepositoryInterface usersRepository;
-    //    PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
     Messages messages;
 
     @Override
@@ -40,7 +40,7 @@ public class UsersService implements UsersServiceInterface {
                         -> new UserNotFoundException(messages.getMessage("error.application.userNotFound"))
                 );
 
-                return new UserDetailsDto(userEntity.getEmail(), userEntity.getPassword(), true, new ArrayList<>());
+                return new User(userEntity.getEmail(), userEntity.getPassword(), true, true, true, true, new ArrayList<>());
             }
         };
     }
@@ -59,7 +59,7 @@ public class UsersService implements UsersServiceInterface {
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
-                .password(userDto.getPassword())
+                .password(passwordEncoder.encode(userDto.getPassword()))
                 .build();
     }
 }
